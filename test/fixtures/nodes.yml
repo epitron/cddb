@@ -1,3 +1,21 @@
+# == Schema Information
+# Schema version: 20090921221646
+#
+# Table name: nodes
+#
+#  id         :integer(4)      not null, primary key
+#  name       :string(255)     
+#  parent_id  :integer(4)      
+#  lent_to_id :integer(4)      
+#  type       :string(255)     
+#  comment    :text            
+#  disc_path  :string(255)     
+#  crate_id   :integer(4)      
+#  sleeve_id  :integer(4)      
+#  size       :integer(4)      
+#  date       :datetime        
+#
+
 root: 
   lent_to_id: 
   comment: 

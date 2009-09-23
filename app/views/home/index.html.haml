@@ -1,0 +1,33 @@
+:javascript
+  function populate_comments(id) {
+    $("#comments")
+  }
+
+  $(document).ready(function(){
+    $("#tree").tree(
+      {
+
+        data: {
+          type  : "json",
+          url   : "/nodes.json",
+          async : true,
+        },
+        
+        //cookies : true,
+
+        ui: {
+          //theme_name  : "classic"
+          animation   : 250,
+        },
+
+        callback: {
+          onselect: function(node, tree) { $("#comments").load("/nodes/"+node.id); },                  // node deselected
+        },
+
+      }
+    );
+  });
+
+#tree
+
+#comments

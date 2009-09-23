@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+    = javascript_include_tag %w[jquery jquery.cookie css tree_component]
+    = stylesheet_link_tag %w[tree_component mine]
+    = yield(:header)
+
+    %title= (yield(:title) || @title || default_title) + " :: cddb"
+
+  %body
+
+    -# show errors and notices
+    - if flash[:notice]
+      = content_tag 'div', h(flash[:notice]), :class => 'notice', :id => 'notice'
+    - if flash[:error]
+      = content_tag 'div', h(flash[:error]), :class => 'notice error', :id => 'error'
+
+    = yield

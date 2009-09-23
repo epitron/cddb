@@ -1,27 +1,37 @@
+#!/usr/bin/ruby
 %w[config/environment cdcatalog pp].each { |r| require r }
 
 if $0 == __FILE__
-  #clearline = "\h" * 80
+  clearline = "\b" * 80
   record_count    = 0
-  #csvfile = "data/catalog.csv"
-  csvfile = "data/small-catalog.csv" 
+  if ARGV[0] and ARGV[0] == "-f"
+    csvfile = "data/catalog.csv"
+  else
+    csvfile = "data/small-catalog.csv"
+  end
 
-  CDCatalog::Parser.new(csvfile).each do |r|
+  puts "* Emptying database..."
+  Node.destroy_all
+  puts "  |_ #{Node.count} nodes left"
+  puts
+
+  puts "* Importing #{csvfile}..."
+  CDCatalog::Parser.new(csvfile).each do |row|
     record_count += 1
 
-    p r.location
-
-    #Node.at_location r.location
-
-    if record_count % 1768 == 0
-      #print clearline
+    if record_count % 25 == 0
+      print clearline
       print "  |_ #{record_count} records..."
       STDOUT.flush
     end
 
+    Node.create_from_row(row)
+
   end
 
-  #print clearline
+  print clearline
   puts "  |_ #{record_count} records..."
+
+  #Node.display_tree
 
 end

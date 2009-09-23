@@ -1,0 +1,107 @@
+.linkbar {
+  background-color: #eeeeee;
+  font-weight: bold;
+  padding: 0.5em 0em 0.5em 0.5em; }
+  .linkbar a {
+    margin: 0px 10px; }
+
+.nicetable {
+  border: 0;
+  border-collapse: collapse;
+  border-style: none; }
+  .nicetable th {
+    background-color: #555;
+    color: #bbb;
+    border: 1px solid #666;
+    padding: 1px 5px 1px 5px; }
+  .nicetable td {
+    font-size: 10pt;
+    border: 1px solid #aaa;
+    padding: 5px 5px 5px 5px; }
+
+.loginbar {
+  color: blue;
+  display: table;
+  float: right;
+  font-weight: normal; }
+  .loginbar a {
+    margin: 0px 10px; }
+
+.sidebar {
+  width: 150px;
+  padding-left: 10px;
+  background-color: #eeffee;
+  float: left; }
+
+.content_with_sidebar {
+  border: thin dotted silver;
+  padding: 1em 1em 1em 1em;
+  margin-left: 160px; }
+
+.content {
+  border: thin dotted silver;
+  padding: 1em 1em 1em 1em; }
+
+.notice {
+  margin: 1em auto 1em auto;
+  padding: 1em 1em 1em 1em;
+  border-left: 1em;
+  border: #e8e871 solid thin;
+  background: #ffffcc;
+  display: table; }
+
+.error {
+  background: red;
+  color: white; }
+
+.hidden {
+  display: none; }
+
+.box {
+  padding: 1em 1em 1em 1em;
+  border-left: 1em;
+  background-color: #fcfcec; }
+
+.box2 {
+  padding: 1em 1em 1em 1em;
+  border-left: 1em;
+  background-color: #cae4fe; }
+
+dl.summary {
+  background: #fffff2;
+  margin-bottom: 0.5em;
+  padding: 1em 1em 1em 1em;
+  border: bisque solid thin; }
+
+.summary dt {
+  font-weight: bold;
+  margin-bottom: 1em; }
+.summary dd {
+  margin-left: 3em; }
+
+a.icon_button {
+  font: 10px "Lucida Grande", Verdana;
+  border: 1px outset #ccc;
+  text-decoration: none;
+  padding: .5em;
+  background: #eee; }
+a:hover.icon_button {
+  background: #aaa;
+  text-decoration: none;
+  border: 1px inset #ccc; }
+a.icon_button img {
+  vertical-align: text-bottom; }
+a:hover.icon_link {
+  text-decoration: none;
+  font-weight: bold; }
+
+.button a:link, .button a:visited {
+  color: #666666;
+  padding: 2px 4px 2px 4px;
+  background-color: #ccffcc;
+  border: 1px outset #00b500;
+  text-decoration: none; }
+.button a:active, .button a:hover {
+  background-color: #e6fee6;
+  border: 1px inset   #D7D7D7;
+  color: #333333; }

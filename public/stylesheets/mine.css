@@ -1,0 +1,53 @@
+body {
+  font: 0.8em "Lucida Grande", Verdana; }
+
+dt {
+  float: left;
+  clear: left;
+  width: 6em; }
+
+dd {
+  float: left;
+  font-weight: bold; }
+
+#tree {
+  position: absolute;
+  border: thin dotted silver;
+  overflow: auto;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 80%; }
+
+#pane {
+  position: absolute;
+  border: thin dotted silver;
+  overflow: auto;
+  top: 0px;
+  right: 0px;
+  width: 60%;
+  height: 79%; }
+
+#comments {
+  position: absolute;
+  border: thin dotted silver;
+  overflow: auto;
+  bottom: 0px;
+  right: 0px;
+  width: 100%;
+  height: 19%; }
+
+.tree-default li a.collection {
+  background-image: url("/icons/collection.png"); }
+.tree-default li a.file {
+  background-image: url("/icons/file.png"); }
+.tree-default li a.virtualfolder {
+  background-image: url("/icons/folder.png"); }
+.tree-default li a.virtualdisc {
+  background-image: url("/icons/disc.png"); }
+.tree-default li a.disc {
+  background-image: url("/icons/disc.png"); }
+.tree-default li a.contact {
+  background-image: url("/icons/contact.png"); }
+.tree-default li a.contacts {
+  background-image: url("/icons/contacts.png"); }

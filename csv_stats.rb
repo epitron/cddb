@@ -6,17 +6,20 @@ if $0 == __FILE__
 
   types           = Hash.new { |hash, key| hash[key] = [] }
   record_count    = 0
+  stop_at         = 50_000  
 
   puts "* Scanning #{path}..."
   CDCatalog::Parser.new(path).each do |r|
     #pp r.to_hash
     record_count += 1
 
-    types[r[:type]] << r.to_hash
+    #types[r[:type]] << r.to_hash
 
     if record_count % 1768 == 0
       puts "  |_ #{record_count} records..."
     end
+
+    break if record_count == stop_at
 
   end
 

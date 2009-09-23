@@ -79,14 +79,14 @@ describe Node do
     nodes.map(&:name).should == node_names
   end
 
-  it "should import records" do
+  it "^-- should import records --^" do
     for row in @rows
       Node.create_from_row(row, zombies=true)
     end
     Node.display_tree
   end
 
-  it "should show a pretty tree" do
+  it "^-- should show a pretty tree --^" do
     Node.mkdir_p(@path)
     Node.mkdir_p("\\\\blah\\stuff\\")
     Node.mkdir_p("\\\\blah\\otherstuff\\")
@@ -95,7 +95,31 @@ describe Node do
     Node.mkdir_p("\\\\a\\yay\\")
     Node.display_tree
   end
-  
+
+  it "should destroy children's children" do
+    Node.mkdir_p(@path)
+    Node.root.children.find_by_name("a").destroy
+    Node.find_by_name("a").should be_nil
+    Node.find_by_name("b").should be_nil
+    Node.find_by_name("c").should be_nil
+  end
+
+  it "should destroy ALL CHILDREN" do
+    Node.mkdir_p(@path)
+    Node.root.children.clear
+    Node.find_by_name("a").should be_nil
+    Node.find_by_name("b").should be_nil
+    Node.find_by_name("c").should be_nil
+  end
+
+  it "children should not destroy parent" do
+    Node.mkdir_p(@path)
+    Node.find_by_name("b").destroy
+    Node.find_by_name("a").should_not be_nil
+    Node.find_by_name("c").should be_nil
+    Node.root.should_not be_nil
+  end
+
 =begin
   it "should have working options dropdowns" do
     %w(product_type color payment_method size pages paper_type).each do |dropdown|

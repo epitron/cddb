@@ -1,0 +1,9 @@
+- attrs = [:total_size, :date, :disc_path, :type, :comment]
+
+%dl
+  - attrs.each do |attr|
+    - val = @node.send(attr)
+    - unless val.blank?
+      %dt= "#{attr.to_s.humanize}:"
+      %dd= val
+

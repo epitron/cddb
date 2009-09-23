@@ -4,22 +4,40 @@
 # Table name: nodes
 #
 #  id         :integer(4)      not null, primary key
-#  parent_id  :integer(4)      
-#  type       :string(255)     
 #  name       :string(255)     
+#  parent_id  :integer(4)      
+#  lent_to_id :integer(4)      
+#  type       :string(255)     
 #  comment    :text            
 #  disc_path  :string(255)     
+#  crate_id   :integer(4)      
+#  sleeve_id  :integer(4)      
+#  size       :integer(4)      
 #  date       :datetime        
-#  created_at :datetime        
-#  updated_at :datetime        
 #
 
 # TODO: Classify files as "video", "audio", "text", etc. for searches
 
 class Node < ActiveRecord::Base
 
+  include ActionView::Helpers::NumberHelper
+
   belongs_to  :parent,    :class_name => "Node",  :foreign_key => "parent_id"
-  has_many    :children,  :class_name => "Node",  :foreign_key => "parent_id"
+  has_many    :children,  :class_name => "Node",  :foreign_key => "parent_id", :dependent => :destroy
+
+  ################################################################################################
+
+  def self.[](value)
+    if value.is_a? String
+      if value =~ /^\d+$/
+        find(value)
+      else
+        find_by_name(value)
+      end
+    else
+      super
+    end
+  end
 
   ################################################################################################
 
@@ -89,11 +107,12 @@ class Node < ActiveRecord::Base
 
   TYPE_TRANSLATION_TABLE = {
     "Collection Folder"     => "Collection",
-    "Virtual Folder"        => "Collection",
+    "Virtual folder"        => "VirtualFolder",
     "Custom Record"         => "VirtualDisc",
     "CD-ROM Drive"          => "Disc",
     "File Folder"           => "Folder",
     "List of Keywords"      => :skip,
+    "List of Contacts"      => :skip,
     "*"                     => "File",
   }
 
@@ -103,12 +122,12 @@ class Node < ActiveRecord::Base
 
   ################################################################################################
 
-  IMPORT_ATTRIBUTES = [:name, :type, :disc_path, :comment, :date, :size,]
-
   def self.create_from_row(row, zombies=false)
-    p [:creating, row.location, row.name]
+
+    translated_type = translated_type(row.type)
+    return if translated_type == :skip
+
     if zombies
-      p [:making_zombie]
       Node.mkdir_p(row.location)
       #display_tree
     end
@@ -118,22 +137,54 @@ class Node < ActiveRecord::Base
       node = parent.children.new 
     end
 
-    IMPORT_ATTRIBUTES.each do |attr|
-      node.send("#{attr}=", row.send(attr))
-    end
-
-    node.type = translated_type(node.type)
+    node.name       = row.name
+    node.disc_path  = row.disc_path
+    node.date       = row.date
+    node.size       = row.size
+    node.comment    = row.comment unless translated_type == "File"
+    node.type       = translated_type
 
     node.save!
+  end
 
-    display_tree
-    puts
+  ################################################################################################
+
+  def self.destroy_all
+    Node.root.children.clear
   end
 
   ################################################################################################
 
   def inspect
     "[\"#{name}\": id=#{id}, parent=#{parent_id.inspect}, size=#{size}, type=#{type || "ZOMBIE"}]"
+  end
+
+  ################################################################################################
+
+  def total_size
+    number_with_delimiter(size) if size
+  end
+
+  ################################################################################################
+
+  def to_json(*args)
+    p args
+#    {
+#        attributes: { id : "node_identificator", [attribute : "attribute_value"] },
+#        state: "closed" or "open",
+#        data: "node_title",
+#        children: [ // an array of child nodes objects ]
+#    }
+
+    result = {
+      :attributes => { :id=>self.id },
+      :data => { :title=>self.name, :attributes=>{:class=>self.type.downcase} },
+      #:children => self.children.map(&:to_json).join(", "),
+    }
+
+    result[:state] = "closed" if children.any?
+
+    result.to_json
   end
 
 end
