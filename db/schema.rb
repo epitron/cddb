@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090923144706) do
+ActiveRecord::Schema.define(:version => 20090923222453) do
 
   create_table "nodes", :force => true do |t|
     t.string   "name"
@@ -20,8 +20,9 @@ ActiveRecord::Schema.define(:version => 20090923144706) do
     t.string   "disc_path"
     t.integer  "crate_id"
     t.integer  "sleeve_id"
-    t.integer  "size"
+    t.integer  "size",           :limit => 8
     t.datetime "date"
+    t.integer  "children_count",              :default => 0
   end
 
   add_index "nodes", ["lent_to_id"], :name => "index_nodes_on_lent_to_id"

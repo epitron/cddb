@@ -18,11 +18,13 @@
 
 # TODO: Classify files as "video", "audio", "text", etc. for searches
 
+require 'set'
+
 class Node < ActiveRecord::Base
 
   include ActionView::Helpers::NumberHelper
 
-  belongs_to  :parent,    :class_name => "Node",  :foreign_key => "parent_id"
+  belongs_to  :parent,    :class_name => "Node",  :foreign_key => "parent_id", :counter_cache => :children_counter
   has_many    :children,  :class_name => "Node",  :foreign_key => "parent_id", :dependent => :destroy
 
   ################################################################################################
@@ -161,28 +163,42 @@ class Node < ActiveRecord::Base
 
   ################################################################################################
 
-  def total_size
-    number_with_delimiter(size) if size
+  UNCONTAINERS = Set.new %w[VirtualDisc File]
+
+  def stats
+    result = []
+
+    result << [ "Total size", "#{number_to_human_size(size)} (#{number_with_delimiter(size)} bytes)" ] if size
+
+    unless UNCONTAINERS.include? type
+      result << [ "Contains", "#{children_count} items" ]
+    end
+
+    result << [ "Type", type ]
+    result << [ "Date", date ]
+    result << [ "Disc Path", disc_path ]
+
+    if comment
+      if comment =~ /^\d+$/
+        result << [ "Sleeve #", comment ]
+      else
+        result << [ "Comment", comment ]
+      end
+    end
+
+    result
   end
 
   ################################################################################################
 
   def to_json(*args)
-    p args
-#    {
-#        attributes: { id : "node_identificator", [attribute : "attribute_value"] },
-#        state: "closed" or "open",
-#        data: "node_title",
-#        children: [ // an array of child nodes objects ]
-#    }
-
     result = {
       :attributes => { :id=>self.id },
       :data => { :title=>self.name, :attributes=>{:class=>self.type.downcase} },
       #:children => self.children.map(&:to_json).join(", "),
     }
 
-    result[:state] = "closed" if children.any?
+    result[:state] = "closed" if children_count > 0
 
     result.to_json
   end
