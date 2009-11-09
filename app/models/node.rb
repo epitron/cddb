@@ -194,7 +194,7 @@ class Node < ActiveRecord::Base
         terms << term
       else
         terms << "+#{term}"
-        words << term
+        words << term.gsub('*', '')
       end
     end
 
