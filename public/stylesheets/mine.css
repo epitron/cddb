@@ -29,14 +29,6 @@ dl.info {
   height: 15%;
   border-top: thin solid black; }
 
-#searchdrawer {
-  background: #ffee8f;
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 30%; }
-
 #searchbox {
   background: #ffee8f;
   position: absolute;
@@ -47,10 +39,6 @@ dl.info {
   padding: 5px 5px 5px 5px; }
   #searchbox form {
     width: 150px; }
-
-.searchfield {
-  padding: 1em 1em 1em 1em;
-  background: blue; }
 
 #results {
   padding: 1em 1em 1em 1em; }
@@ -81,6 +69,18 @@ dl.info {
     list-style-image: url("/images/icons/contact.png"); }
   #results ul li.contacts {
     list-style-image: url("/images/icons/contacts.png"); }
+
+#searchdrawer {
+  background: #ffee8f;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 30%; }
+
+.searchfield {
+  padding: 1em 1em 1em 1em;
+  background: blue; }
 
 .drawerbutton {
   position: absolute;
