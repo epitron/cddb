@@ -1,12 +1,12 @@
 %a{:href=>"/"}
-  <- home
+  <- back
 
 #searchbox
   %form
     = text_field_tag("q", params[:q])
 
 #results
-  %h2= "Results for: \"#{params[:q]}\""
+  %h2 Results for: "#{params[:q]}"
 
   - if @results
     - for disc, nodes in @results.group_by(&:containing_disc)
