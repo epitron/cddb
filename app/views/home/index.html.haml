@@ -1,8 +1,4 @@
 :javascript
-  function populate_comments(id) {
-    $("#comments")
-  }
-
   $(document).ready(function(){
     $("#tree").tree(
       {
@@ -26,8 +22,36 @@
 
       }
     );
+
+    /*
+    $(".drawerbutton").toggle(
+      //function(){ $("#searchdrawer").addClass("hidden");     console.log("hide!"); },
+      //function(){ $("#searchdrawer").removeClass("hidden");  console.log("show!"); }
+      function(){ $("#searchdrawer").hide(); },
+      function(){ $("#searchdrawer").show(); }
+    );
+    */
+    $(".drawerbutton").click(
+      function(){ $("#searchdrawer").slideToggle("slow"); }
+    );
+
   });
 
 #tree
 
 #stats
+
+
+#searchbox
+  %form{:action=>url_for("/home/search")}
+    = text_field_tag("q")
+
+
+/
+  .drawerbutton
+  #searchdrawer.opened
+    .searchfield
+      %form
+        = text_field_tag("search")
+    #results
+      results!

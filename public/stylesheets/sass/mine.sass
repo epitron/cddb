@@ -41,7 +41,98 @@ dl.info
   height: 15%
   border-top: thin solid black
 
+#searchdrawer
+  //border: thin solid black
+  background: #ffee8f
+  position: absolute
+  right: 0
+  top: 0
+  bottom: 0
+  width: 30%
 
+#searchbox
+  //border: thin solid black
+  background: #ffee8f
+  position: absolute
+  right: 0
+  top: 0
+  width: 160px
+  height: 100
+  padding: 5px 5px 5px 5px
+
+  form
+    width: 150px
+
+
+
+.searchfield
+  padding: 1em 1em 1em 1em
+  background: blue
+
+#results
+  padding: 1em 1em 1em 1em
+
+  .disc
+    background-image: url("/images/icons/disc.png")
+    background-repeat:      no-repeat
+    padding-left: 18px
+    font-size: larger
+    font-weight: bold
+
+  li.tiny
+    font-size: x-small
+    padding-bottom: 0.5em
+
+  ul
+    li.path
+      list-style-image: url("/images/icons/virtualfolder.png")
+
+    li.collection
+      list-style-image: url("/images/icons/collection.png")
+  
+    li.file
+      list-style-image: url("/images/icons/file.png")
+  
+    li.folder
+      list-style-image: url("/images/icons/folder.png")
+  
+    li.virtualfolder
+      list-style-image: url("/images/icons/virtualfolder.png")
+
+    li.virtualdisc
+      list-style-image: url("/images/icons/disc.png")
+  
+    li.disc
+      list-style-image: url("/images/icons/disc.png")
+  
+    li.contact
+      list-style-image: url("/images/icons/contact.png")
+  
+    li.contacts
+      list-style-image: url("/images/icons/contacts.png")
+
+
+
+.drawerbutton
+  //position: relative
+  position: absolute
+  width: 22px
+  height: 71px
+  background-image: url("/images/search.png")
+  //left: -22px
+  //top: 45%
+  top: 0
+  right: 30%
+
+.drawer_open
+  width: 30%
+
+.drawer_closed
+  width: 0
+
+
+.highlight
+  background: #ffff00
 
 .tree-default li
   a.collection
@@ -51,7 +142,7 @@ dl.info
     background-image: url("/images/icons/file.png")
 
   a.virtualfolder
-    background-image: url("/images/icons/folder.png")
+    background-image: url("/images/icons/virtualfolder.png")
 
   a.virtualdisc
     background-image: url("/images/icons/disc.png")

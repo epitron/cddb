@@ -1,0 +1,25 @@
+#searchbox
+  %form
+    = text_field_tag("q", params[:q])
+
+#results
+  %h2= "Results for: \"#{params[:q]}\""
+
+  - if @results
+    - for disc, nodes in @results.group_by(&:containing_disc)
+
+      / disc title
+      .disc
+        = highlight(disc.name, @words)
+        = "(Sleeve ##{disc.sleeve})" if disc.sleeve
+
+      / list of files
+      %ul
+        - for path, path_nodes in nodes.group_by(&:relative_path)
+          - next if path_nodes.all?{|n|n.disc?}
+          %li.path= path
+          %ul
+            - for node in path_nodes
+              %li{:class=>node.css_class}= highlight(node.name, @words)
+       
+

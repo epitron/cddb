@@ -157,12 +157,6 @@ class Node < ActiveRecord::Base
 
   ################################################################################################
 
-  def inspect
-    "[\"#{name}\": id=#{id}, parent=#{parent_id.inspect}, size=#{size}, type=#{type || "ZOMBIE"}]"
-  end
-
-  ################################################################################################
-
   UNCONTAINERS = Set.new %w[VirtualDisc File]
 
   def stats
@@ -191,10 +185,75 @@ class Node < ActiveRecord::Base
 
   ################################################################################################
 
+  def self.search(query)
+    terms = []
+    words = []
+
+    for term in query.split
+      if term[0..0] == "-"
+        terms << term
+      else
+        terms << "+#{term}"
+        words << term
+      end
+    end
+
+    results = find(:all, :conditions=>["MATCH(name) AGAINST (? IN BOOLEAN MODE)", terms.join(' ')])
+
+    {
+      :results    => results,
+      :words      => words,
+      :terms      => terms,
+    }
+  end
+
+  ################################################################################################
+
+  def containing_disc
+    p self
+    cur = self
+    until cur.disc? or cur.root?
+      cur = cur.parent
+    end
+    cur
+  end
+
+  def sleeve
+    comment if comment =~ /^\d+$/
+  end
+
+  def relative_path
+    $1 if disc_path =~ /(.+)#{Regexp.escape name}/
+  end
+
+  def root?
+    self.type == "Root"
+  end
+
+  def disc?
+    self.type == "Disc"
+  end
+
+  def icon_path
+    "/images/icons/#{css_class}.png"
+  end
+
+  def css_class
+    self.type.downcase
+  end
+
+  ################################################################################################
+
+  def inspect
+    "[\"#{name}\": id=#{id}, parent=#{parent_id.inspect}, size=#{size}, type=#{type || "ZOMBIE"}]"
+  end
+
+  ################################################################################################
+
   def to_json(*args)
     result = {
       :attributes => { :id=>self.id },
-      :data => { :title=>self.name, :attributes=>{:class=>self.type.downcase} },
+      :data => { :title=>self.name, :attributes=>{:class=>self.css_class} },
       #:children => self.children.map(&:to_json).join(", "),
     }
 
