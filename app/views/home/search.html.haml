@@ -26,6 +26,6 @@
               %li{:class=>node.css_class}
                 = highlight(node.name, @words)
                 - if node.type == 'VirtualDisc'
-                  %b (sleeve {node.comment})                
+                  %b [sleeve #{node.comment}]                
        
 
