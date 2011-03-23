@@ -25,7 +25,7 @@
             - for node in path_nodes
               %li{:class=>node.css_class}
                 = highlight(node.name, @words)
-                - if node.type == 'VirtualDisc'
+                - if node.type == 'VirtualDisc' and not node.comment.blank?
                   %b [sleeve #{node.comment}]                
        
 
