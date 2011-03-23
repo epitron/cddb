@@ -23,6 +23,9 @@
           %li.path= path
           %ul
             - for node in path_nodes
-              %li{:class=>node.css_class}= highlight(node.name, @words)
+              %li{:class=>node.css_class}
+                = highlight(node.name, @words)
+                - if node.type == 'VirtualDisc'
+                  (disc #{node.comment})                
        
 
