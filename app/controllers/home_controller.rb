@@ -6,7 +6,7 @@ class HomeController < ApplicationController
   def search
     if query = params[:q]
       search   = Node.search(query)
-      @results  = search[:results]
+      @results  = search[:nodes].map{ |node| (node.type == "Disc") ? node.children : node } # expand Discs
       @words    = search[:words]
       @terms    = search[:terms]
     end

@@ -198,10 +198,10 @@ class Node < ActiveRecord::Base
       end
     end
 
-    results = find(:all, :conditions=>["MATCH(name) AGAINST (? IN BOOLEAN MODE)", terms.join(' ')])
+    nodes = find(:all, :conditions=>["MATCH(name) AGAINST (? IN BOOLEAN MODE)", terms.join(' ')])
 
     {
-      :results    => results,
+      :nodes      => nodes,
       :words      => words,
       :terms      => terms,
     }

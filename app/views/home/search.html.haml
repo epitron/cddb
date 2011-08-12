@@ -9,7 +9,7 @@
   %h2 Results for: "#{params[:q]}"
 
   - if @results
-    - for disc, nodes in @results.group_by(&:containing_disc)
+    - for disc, nodes in @results.group_by { |result| result.containing_disc rescue '' }
 
       / disc title
       .disc
