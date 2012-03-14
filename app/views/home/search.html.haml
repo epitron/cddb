@@ -9,17 +9,20 @@
   %h2 Results for: "#{params[:q]}"
 
   - if @results
-    - for disc, nodes in @results.group_by { |result| result.containing_disc rescue '' }
+    - for disc, nodes in @results.group_by { |result| result.containing_disc rescue nil }
+      - if disc
+        / disc title
+        .disc
+          = highlight(disc.name, @words)
+          = "(Sleeve ##{disc.sleeve})" if disc.sleeve
+      - else
+        No disc title
 
-      / disc title
-      .disc
-        = highlight(disc.name, @words)
-        = "(Sleeve ##{disc.sleeve})" if disc.sleeve
-
+     
       / list of files
       %ul
-        - for path, path_nodes in nodes.group_by(&:relative_path)
-          - next if path_nodes.all?{|n|n.disc?}
+        - for path, path_nodes in nodes.group_by { |node| node.relative_path rescue nil }
+          - next if !path or path_nodes.all?{|n|n.disc?}
           %li.path= path
           %ul
             - for node in path_nodes
