@@ -24,7 +24,7 @@ class Node < ActiveRecord::Base
 
   include ActionView::Helpers::NumberHelper
 
-  belongs_to  :parent,    :class_name => "Node",  :foreign_key => "parent_id", :counter_cache => :children_counter
+  belongs_to  :parent,    :class_name => "Node",  :foreign_key => "parent_id", :counter_cache => :children_count
   has_many    :children,  :class_name => "Node",  :foreign_key => "parent_id", :dependent => :destroy
 
   ################################################################################################
