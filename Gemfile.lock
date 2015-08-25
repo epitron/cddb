@@ -32,7 +32,7 @@ GEM
     sass (3.1.15)
     test-unit (1.2.3)
       hoe (>= 1.5.1)
-    yard (0.8.7.4)
+    yard (0.8.7.6)
 
 PLATFORMS
   ruby
